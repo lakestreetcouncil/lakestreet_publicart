@@ -1,1 +1,1 @@
-# publicart
+# lakestreet_publicart
