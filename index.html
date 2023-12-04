@@ -26,7 +26,7 @@
     /* Popup styling */
 
     .mapboxgl-popup {
-      padding-bottom: 10px;
+      padding-bottom: 5px;
     }
 
     .mapboxgl-popup-close-button {
@@ -34,9 +34,9 @@
     }
 
     .mapboxgl-popup-content {
-      font: 400 15px/22px 'Poppins', 'Open Sans', Sans-serif;
+      font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
       padding: 0;
-      width: 425px;
+      width: 250px;
     }
 
     .mapboxgl-popup-content-wrapper {
@@ -44,21 +44,21 @@
     }
 
     .mapboxgl-popup-content h3 {
-      background: #0f4a68;
+      background: rgb(61, 59, 59);
       text-align: center;
       color: #fff;
       margin: 0;
       display: block;
       padding: 15px;
-      font-weight: 500;
+      font-weight: 700;
       margin-top: -5px;
     }
 
     .mapboxgl-popup-content h4 {
       margin: 0;
       display: block;
-      padding: 7px 3px 7px 7px;
-      font-weight: 300;
+      padding: 10px 3px 10px 10px;
+      font-weight: 400;
     }
 
     .mapboxgl-container {
@@ -66,7 +66,7 @@
     }
 
     .mapboxgl-popup-anchor-top>.mapboxgl-popup-content {
-      margin-top: 5px;
+      margin-top: 3px;
     }
 
     .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
@@ -91,13 +91,13 @@
       };
     };
     //YOUR TURN: add your Mapbox token
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoibGFrZXN0cmVldGNvdW5jaWwiLCJhIjoiY2xwcmJldjEzMDc4MzJrbXV2MG10NjlrbCJ9.gqfse4hqRkroC0fPTgRxiw'; //Mapbox token
+    
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGFrZXN0cmVldGNvdW5jaWwiLCJhIjoiY2xwcmdha2o2MDc4bjJrcDlyMjZmYzR3aiJ9.PKjU2OiuC5shrwUeaU3FBg'; //Mapbox token 
     var map = new mapboxgl.Map({
       container: 'map', // container id
       style: 'mapbox://styles/lakestreetcouncil/ckmpnga7r0atd17pqadxi87z7', // YOUR TURN: choose a style: https://docs.mapbox.com/api/maps/#styles
       center: [-93.260757, 44.948009], // starting position [lng, lat]
-      zoom: 10,// starting zoom
+      zoom: 15,// starting zoom
       transformRequest: transformRequest
     });
 
@@ -105,17 +105,16 @@
       $.ajax({
         type: "GET",
         //YOUR TURN: Replace with csv export link
-        url: 'https://docs.google.com/spreadsheets/d/1VTRVUmXb75zuNE_mGPF0gT_QZKb70OP0ptdfiSDJoak/gviz/tq?tqx=out:csv&sheet=publicart_lakestreet',
+        url: 'https://docs.google.com/spreadsheets/d/1VTRVUmXb75zuNE_mGPF0gT_QZKb70OP0ptdfiSDJoak/gviz/tq?tqx=out:csv&sheet=publicart',
         dataType: "text",
         success: function (csvData) { makeGeoJSON(csvData); }
       });
 
 
-
       function makeGeoJSON(csvData) {
         csv2geojson.csv2geojson(csvData, {
-          latfield: 'latitude',
-          lonfield: 'longitude',
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
           delimiter: ','
         }, function (err, data) {
           map.on('load', function () {
@@ -146,10 +145,9 @@
              
               var description = 
               `<h3>` + e.features[0].properties.address + `</h3>` + 
-              `<h4>` + `<b>` + `Title of Art Work: ` + `</b>` + e.features[0].properties.art_name + `</h4>` +
-              `<h4>` + `<b>` + `Artist/s: ` + `</b>` + e.features[0].properties.artist + `</h4>` +
-              `<h4>` + `<b>` + `Year: ` + `</b>` + e.features[0].properties.year + `</h4>` ;
-            
+              `<h4>` + e.features[0].properties.art_name + `</h4>` +
+              `<h4>` + e.features[0].properties.artist + `</h4>` +
+              `<h4>` + e.features[0].properties.year + `</h4>`;
 
               // Ensure that if the map is zoomed out such that multiple
               // copies of the feature are visible, the popup appears
