@@ -154,12 +154,14 @@
               // For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
              
               var description = 
+              `<img src="https://images.squarespace-cdn.com/content/v1/5e669116eea473063ca33484/61059510-27ea-4c94-93eb-931d927b4d52/IMG_20220726_144505322_HDR.jpg?format=2500w" width="100%" />`+
+              `<br />` +
               `<h3>` + e.features[0].properties.address + `</h3>` + 
               `<h4>` + e.features[0].properties.art_name + `</h4>` +
               `<h5>` + e.features[0].properties.artist + `</h4>` +
               `<h5>` + e.features[0].properties.year + `</h4>` +
-              `<br />` + 
-              `<img src="https://images.squarespace-cdn.com/content/v1/5e669116eea473063ca33484/61059510-27ea-4c94-93eb-931d927b4d52/IMG_20220726_144505322_HDR.jpg?format=2500w" width="85%" align="center" />`
+              
+              
                 
               // Ensure that if the map is zoomed out such that multiple
               // copies of the feature are visible, the popup appears
