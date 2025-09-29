@@ -129,7 +129,7 @@
         }, function (err, data) {
           map.on('load', function () {
 
-            //Add the the layer to the map
+            //Add this marker layer to the map with conditional styling
             map.addLayer({
               'id': 'csvData',
               'type': 'circle',
@@ -138,11 +138,22 @@
                 'data': data
               },
               'paint': {
-                'circle-radius': 8,
-                'circle-color': "#6ec6f0"
+                // Dynamic circle radius based on marker_type
+                'circle-radius': [
+                  'case',
+                  ['==', ['get', 'marker_type'], 'type_a'], 8,  // Type A markers are medium
+                  ['==', ['get', 'marker_type'], 'type_b'], 8, // Type B markers are larger
+                  8 // Default size
+                ],
+                // Dynamic circle color based on marker_type
+                'circle-color': [
+                  'case',
+                  ['==', ['get', 'marker_type'], 'type_a'], '#6ec6f0', // Blue for Type A
+                  ['==', ['get', 'marker_type'], 'type_b'], '#ff6b6b', // Red for Type B
+                  '#6ec6f0' // Default blue
+                ],
               }
             });
-
 
             // When a click event occurs on a feature in the csvData layer, open a popup at the
             // location of the feature, with description HTML from its properties.
